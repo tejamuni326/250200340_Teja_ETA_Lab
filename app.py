@@ -12,12 +12,15 @@ st.set_page_config(
 
 # DATABASE CONNECTION
 def connect_db():
+    db_config = st.secrets["db"]
+
     return psycopg2.connect(
-        host=st.secrets["postgres"]["host"],
-        port=st.secrets["postgres"]["port"],
-        database=st.secrets["postgres"]["database"],
-        user=st.secrets["postgres"]["user"],
-        password=st.secrets["postgres"]["password"],
+        host=db_config["host"],
+        port=db_config["port"],
+        dbname=db_config["dbname"],
+        user=db_config["user"],
+        password=db_config["password"],
+        sslmode=db_config.get("sslmode", "prefer"),
         connect_timeout=5
     )
 
